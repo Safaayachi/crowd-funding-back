@@ -1,0 +1,8 @@
+{
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#4D1B38",
+		"titleBar.activeBackground": "#6C264F",
+		"titleBar.activeForeground": "#FDF8FB"
+	},
+	"cSpell.words": ["crowdfundingback"]
+}
