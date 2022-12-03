@@ -22,7 +22,6 @@ CREATE TABLE `Project` (
     `moneyRaised` DOUBLE NOT NULL DEFAULT 0,
     `creatorId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Project_creatorId_key`(`creatorId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -33,8 +32,6 @@ CREATE TABLE `Contribution` (
     `contributorId` INTEGER NOT NULL,
     `projectId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Contribution_contributorId_key`(`contributorId`),
-    UNIQUE INDEX `Contribution_projectId_key`(`projectId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -44,7 +41,6 @@ CREATE TABLE `Image` (
     `url` VARCHAR(191) NOT NULL,
     `projectId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Image_projectId_key`(`projectId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -54,7 +50,6 @@ CREATE TABLE `Video` (
     `url` VARCHAR(191) NOT NULL,
     `projectId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Video_projectId_key`(`projectId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -62,15 +57,14 @@ CREATE TABLE `Video` (
 CREATE TABLE `Reward` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
-    `level` VARCHAR(191) NULL,
+    `level` INTEGER NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `image` VARCHAR(191) NULL,
+    `image` VARCHAR(191) NOT NULL,
     `value` DOUBLE NOT NULL,
     `quantityLimited` BOOLEAN NOT NULL DEFAULT false,
-    `shippingDuration` DATETIME(3) NULL,
+    `shippingDuration` DATETIME(3) NOT NULL,
     `projectId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Reward_projectId_key`(`projectId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -80,7 +74,6 @@ CREATE TABLE `Comment` (
     `comment` VARCHAR(191) NOT NULL,
     `projectId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Comment_projectId_key`(`projectId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -100,7 +93,6 @@ CREATE TABLE `SubCategory` (
     `categoryId` INTEGER NOT NULL,
 
     UNIQUE INDEX `SubCategory_Name_key`(`Name`),
-    UNIQUE INDEX `SubCategory_categoryId_key`(`categoryId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -115,15 +107,12 @@ CREATE TABLE `Chat` (
 CREATE TABLE `Message` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `message` VARCHAR(191) NOT NULL,
-    `creationDate` DATETIME(3) NOT NULL,
+    `creationDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `seen` BOOLEAN NOT NULL DEFAULT false,
     `senderId` INTEGER NOT NULL,
     `receiverId` INTEGER NOT NULL,
     `chatId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Message_senderId_key`(`senderId`),
-    UNIQUE INDEX `Message_receiverId_key`(`receiverId`),
-    UNIQUE INDEX `Message_chatId_key`(`chatId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

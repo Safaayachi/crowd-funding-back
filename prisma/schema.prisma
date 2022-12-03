@@ -11,115 +11,105 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  firstName String
-  lastName String
-  email String @unique
-  password String
-  creator Boolean @default(true)
-  avatar String?
-  projects Project[]
+  id            Int            @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String         @unique
+  password      String
+  creator       Boolean        @default(true)
+  avatar        String?
+  projects      Project[]
   contributions Contribution[]
-  chats Chat[]
-  }
-
+  chats         Chat[]
+}
 
 model Project {
-  id Int @id @default(autoincrement())
-  title String
-  description String
-  country String
-  images Image[]
-  videos Video[]
-  Budget Float
-  categories Category[]
-  rewards Reward[]
-  comments Comment[]
+  id            Int            @id @default(autoincrement())
+  title         String
+  description   String
+  country       String
+  images        Image[]
+  videos        Video[]
+  Budget        Float
+  categories    Category[]
+  rewards       Reward[]
+  comments      Comment[]
   contributions Contribution[]
-  moneyRaised Float @default(0)
-  user User @relation(fields: [creatorId],references: [id])
-  creatorId Int @unique
+  moneyRaised   Float          @default(0)
+  user          User           @relation(fields: [creatorId], references: [id])
+  creatorId     Int
 }
 
-
-
-model Contribution{
-  id Int @id @default(autoincrement())
-  amount Float
-  user User @relation(fields: [contributorId],references: [id])
-  contributorId Int @unique
-  project Project @relation(fields: [projectId],references: [id])
-  projectId Int @unique
+model Contribution {
+  id            Int     @id @default(autoincrement())
+  amount        Float
+  user          User    @relation(fields: [contributorId], references: [id])
+  contributorId Int
+  project       Project @relation(fields: [projectId], references: [id])
+  projectId     Int
 }
 
-
-model Image{
-  id Int @id @default(autoincrement())
-  url String
-  project Project @relation(fields: [projectId],references: [id])
-  projectId Int @unique
+model Image {
+  id        Int     @id @default(autoincrement())
+  url       String
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
 }
 
-
-model Video{
-  id Int @id @default(autoincrement())
-  url String
-  project Project @relation(fields: [projectId],references: [id])
-  projectId Int @unique
+model Video {
+  id        Int     @id @default(autoincrement())
+  url       String
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
 }
 
-
-model Reward{
-  id Int @id @default(autoincrement())
-  title String
-  level String?
-  description String
-  image String?
-  value Float
-  quantityLimited Boolean @default(false)
-  shippingDuration DateTime?
-  project Project @relation(fields: [projectId],references: [id])
-  projectId Int @unique
+model Reward {
+  id               Int       @id @default(autoincrement())
+  title            String
+  level            Int
+  description      String
+  image            String
+  value            Float
+  quantityLimited  Boolean   @default(false)
+  shippingDuration DateTime
+  project          Project   @relation(fields: [projectId], references: [id])
+  projectId        Int
 }
 
-
-model Comment{
-  id Int @id @default(autoincrement())
-  comment String
-  project Project @relation(fields: [projectId],references: [id])
-  projectId Int @unique
+model Comment {
+  id        Int     @id @default(autoincrement())
+  comment   String
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
 }
 
-
-model Category{
-  id Int @id @default(autoincrement())
-  Name String @unique
-  projects Project[]
+model Category {
+  id            Int           @id @default(autoincrement())
+  Name          String        @unique
+  projects      Project[]
   subCategories SubCategory[]
 }
 
-
-model SubCategory{
- id Int @id @default(autoincrement())
- Name String @unique
- category Category @relation(fields: [categoryId],references: [id])
- categoryId Int @unique
+model SubCategory {
+  id         Int      @id @default(autoincrement())
+  Name       String   @unique
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
 }
 
-
 model Chat {
-  id Int @id @default(autoincrement())
+  id       Int       @id @default(autoincrement())
   messages Message[]
-  users User[]
+  users    User[]
 }
 
 model Message {
-  id Int @id @default(autoincrement())
-  message String
-  creationDate DateTime
-  seen Boolean @default(false)
-  senderId Int @unique
-  receiverId Int @unique
-  chatId Int @unique
-  chat Chat @relation(fields: [chatId],references: [id])
+  id           Int      @id @default(autoincrement())
+  message      String
+  creationDate DateTime @default(now())
+  seen         Boolean  @default(false)
+  senderId     Int
+  receiverId   Int
+  chatId       Int
+  chat         Chat     @relation(fields: [chatId], references: [id])
 }
